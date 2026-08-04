@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JSE Energy Advisor — Diagnóstico Energético Empresarial (DEE)</title>
+<meta name="description" content="Descubra se sua empresa está pagando até R$ 8.000/mês a mais na conta de luz. Diagnóstico Energético Empresarial isento, com garantia de resultado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --primary:#0D2B42;
+    --primary-light:#153a56;
+    --secondary:#1A6B4B;
+    --accent:#C8A45C;
+    --ink:#1A1A1A;
+    --ink-soft:#555555;
+    --bg-alt:#F5F2ED;
+    --white:#FFFFFF;
+    --danger:#8a3324;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    line-height:1.6;
+    background:var(--white);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.eyebrow,.logo,.stat-number,.price-value{font-family:'Montserrat',sans-serif;}
+  a{text-decoration:none;color:inherit;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+
+  .container{max-width:1140px;margin:0 auto;padding:0 24px;}
+
+  .eyebrow{
+    display:inline-block;
+    font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--accent);margin-bottom:14px;
+  }
+
+  /* ---------- NAVBAR ---------- */
+  header.navbar{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:rgba(13,43,66,.96);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid rgba(200,164,92,.18);
+  }
+  .navbar .container{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .logo{color:var(--white);font-weight:700;font-size:19px;letter-spacing:.02em;display:flex;align-items:center;gap:10px;}
+  .logo .mark{
+    width:34px;height:34px;border-radius:8px;
+    background:linear-gradient(135deg,var(--secondary),var(--accent));
+    display:flex;align-items:center;justify-content:center;color:var(--primary);
+    font-weight:800;font-size:15px;
+  }
+  .logo small{
+    display:block;font-family:'Inter',sans-serif;font-weight:400;font-size:10px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--accent);
+  }
+  .nav-links{display:none;gap:32px;align-items:center;}
+  @media(min-width:900px){.nav-links{display:flex;}}
+  .nav-links a{color:rgba(255,255,255,.82);font-size:14px;font-weight:500;transition:color .2s;}
+  .nav-links a:hover{color:var(--accent);}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:6px;
+    font-weight:600;font-size:14px;font-family:'Inter',sans-serif;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    border:none;cursor:pointer;
+  }
+  .btn-accent{background:var(--accent);color:var(--primary);}
+  .btn-accent:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(200,164,92,.35);}
+  .btn-outline{background:transparent;color:var(--white);border:1px solid rgba(255,255,255,.35);}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+  .btn-outline-dark{background:transparent;color:var(--primary);border:1px solid rgba(13,43,66,.25);}
+  .btn-outline-dark:hover{border-color:var(--primary);}
+  .nav-cta{display:none;}
+  @media(min-width:900px){.nav-cta{display:inline-flex;}}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    background:
+      radial-gradient(1100px 600px at 78% -10%, rgba(26,107,75,.35), transparent 60%),
+      linear-gradient(180deg, var(--primary) 0%, var(--primary-light) 100%);
+    color:var(--white);
+    padding:168px 0 100px;
+    position:relative;overflow:hidden;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(200,164,92,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(200,164,92,.05) 1px, transparent 1px);
+    background-size:56px 56px;
+    mask-image:linear-gradient(180deg, transparent, rgba(0,0,0,.6) 40%, transparent 90%);
+    pointer-events:none;
+  }
+  .hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+  .hero h1{font-size:clamp(30px,4vw,48px);line-height:1.16;font-weight:800;letter-spacing:-.01em;}
+  .hero h1 span{color:var(--accent);}
+  .hero p.lead{margin-top:22px;font-size:18px;color:rgba(255,255,255,.78);max-width:540px;}
+  .hero-actions{margin-top:36px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;}
+
+  .exemption-seal{
+    margin-top:32px;
+    display:inline-flex;align-items:center;gap:10px;
+    padding:10px 18px;
+    border:1px solid rgba(200,164,92,.4);
+    border-radius:999px;
+    font-size:13px;font-weight:600;
+    color:var(--accent);
+    background:rgba(200,164,92,.06);
+  }
+  .exemption-seal .check{
+    width:18px;height:18px;border-radius:50%;
+    background:var(--accent);color:var(--primary);
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;flex:none;
+  }
+
+  .hero-photo{
+    position:relative;border-radius:16px;overflow:hidden;aspect-ratio:4/5;
+    background:
+      linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.01)),
+      repeating-linear-gradient(135deg, rgba(200,164,92,.12) 0 2px, transparent 2px 26px);
+    border:1px solid rgba(200,164,92,.25);
+    display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;}
+  .hero-photo .placeholder-label{color:rgba(255,255,255,.5);font-size:13px;line-height:1.5;}
+  .hero-photo .placeholder-label strong{display:block;color:var(--accent);font-family:'Montserrat',sans-serif;font-size:14px;margin-bottom:6px;letter-spacing:.04em;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{padding:100px 0;}
+  .section-alt{background:var(--bg-alt);}
+  .section-dark{background:var(--primary);color:var(--white);}
+  .section-head{max-width:660px;margin-bottom:56px;}
+  .section-head h2{font-size:clamp(26px,3vw,36px);font-weight:700;color:var(--primary);letter-spacing:-.01em;}
+  .section-dark .section-head h2{color:var(--white);}
+  .section-head p{margin-top:14px;color:var(--ink-soft);font-size:16px;}
+  .section-dark .section-head p{color:rgba(255,255,255,.72);}
+  .section-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+
+  /* ---------- O PROBLEMA ---------- */
+  .problem-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start;
+  }
+  @media(max-width:860px){.problem-grid{grid-template-columns:1fr;}}
+  .pain-list li{
+    display:flex;gap:14px;padding:16px 0;border-top:1px solid #e4e0d8;
+    font-size:15px;color:var(--ink-soft);
+  }
+  .pain-list li:last-child{border-bottom:1px solid #e4e0d8;}
+  .pain-list .pain-icon{
+    flex:none;width:26px;height:26px;border-radius:50%;
+    background:rgba(138,51,36,.1);color:var(--danger);
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+  }
+  .highlight-box{
+    background:var(--primary);color:var(--white);
+    border-radius:14px;padding:38px 34px;
+    border:1px solid rgba(200,164,92,.25);
+  }
+  .highlight-box .num{
+    font-family:'Montserrat',sans-serif;font-weight:800;
+    font-size:clamp(30px,3.4vw,40px);color:var(--accent);line-height:1.1;
+  }
+  .highlight-box p{margin-top:14px;color:rgba(255,255,255,.8);font-size:15px;}
+
+  /* ---------- ETAPAS DEE ---------- */
+  .steps4{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid #e4e0d8;}
+  @media(max-width:900px){.steps4{grid-template-columns:1fr 1fr;}}
+  @media(max-width:560px){.steps4{grid-template-columns:1fr;}}
+  .step{padding:32px 28px 32px 0;border-bottom:1px solid #e4e0d8;position:relative;}
+  .step:not(:last-child){border-right:1px solid #e4e0d8;padding-right:28px;}
+  @media(max-width:900px){.step:nth-child(2n){border-right:none;}}
+  @media(max-width:560px){.step{border-right:none !important;}}
+  .step-num{font-family:'Montserrat',sans-serif;font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.1em;margin-bottom:16px;}
+  .step h3{font-size:17px;color:var(--primary);margin-bottom:10px;font-weight:700;}
+  .step p{color:var(--ink-soft);font-size:14.5px;}
+
+  /* ---------- MODELO DE PARCERIA ---------- */
+  .price-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media(max-width:760px){.price-cards{grid-template-columns:1fr;}}
+  .price-card{
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(200,164,92,.25);
+    border-radius:12px;padding:30px 28px;
+  }
+  .price-card .tag{
+    display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--accent);margin-bottom:14px;
+  }
+  .price-card h3{font-size:18px;color:var(--white);margin-bottom:10px;font-weight:700;}
+  .price-card p{color:rgba(255,255,255,.75);font-size:14.5px;}
+  .price-card .price-value{font-size:24px;font-weight:800;color:var(--accent);margin:6px 0 10px;}
+  .guarantee-strip{
+    margin-top:24px;
+    background:rgba(26,107,75,.16);
+    border:1px solid rgba(26,107,75,.5);
+    border-radius:12px;padding:26px 28px;
+    display:flex;gap:18px;align-items:flex-start;
+  }
+  .guarantee-strip .icon{
+    flex:none;width:40px;height:40px;border-radius:10px;
+    background:var(--secondary);color:var(--white);
+    display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;
+  }
+  .guarantee-strip h4{color:var(--white);font-size:16px;margin-bottom:6px;font-weight:700;}
+  .guarantee-strip p{color:rgba(255,255,255,.78);font-size:14.5px;}
+  .exemption-strip{
+    margin-top:16px;
+    border:1px dashed rgba(200,164,92,.4);
+    border-radius:12px;padding:22px 26px;
+    color:rgba(255,255,255,.8);
+    font-size:14.5px;
+  }
+  .exemption-strip strong{color:var(--accent);}
+
+  /* ---------- SEGMENTOS ---------- */
+  .segments-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e4e0d8;border:1px solid #e4e0d8;}
+  @media(max-width:700px){.segments-grid{grid-template-columns:repeat(2,1fr);}}
+  .segment{background:var(--white);padding:34px 20px;text-align:center;font-family:'Montserrat',sans-serif;font-weight:700;font-size:15px;color:var(--primary);transition:background .2s;}
+  .segment:hover{background:var(--bg-alt);}
+
+  /* ---------- AUTORIDADE ---------- */
+  .authority{background:var(--primary);color:var(--white);}
+  .authority-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:64px;align-items:center;}
+  @media(max-width:900px){.authority-grid{grid-template-columns:1fr;}}
+  .authority-photo{
+    aspect-ratio:1/1;border-radius:14px;
+    background:
+      linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.01)),
+      repeating-linear-gradient(135deg, rgba(200,164,92,.12) 0 2px, transparent 2px 26px);
+    border:1px solid rgba(200,164,92,.25);
+    display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;
+  }
+  .authority-photo img{width:100%;height:100%;object-fit:cover;}
+  .authority-photo .placeholder-label{color:rgba(255,255,255,.5);font-size:13px;line-height:1.5;}
+  .authority-photo .placeholder-label strong{display:block;color:var(--accent);font-family:'Montserrat',sans-serif;font-size:14px;margin-bottom:6px;}
+  .authority h2{font-size:clamp(24px,3vw,32px);font-weight:700;margin-bottom:6px;}
+  .authority .role{color:var(--accent);font-size:14px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:22px;}
+  .authority p.bio{color:rgba(255,255,255,.78);font-size:15.5px;max-width:560px;}
+  .authority p.bio.extra{margin-top:14px;color:var(--accent);font-weight:600;font-size:14.5px;}
+  .stats{margin-top:36px;display:flex;gap:44px;flex-wrap:wrap;}
+  .stat-number{font-size:30px;font-weight:800;color:var(--accent);}
+  .stat-label{font-size:12.5px;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:.06em;margin-top:4px;}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{max-width:760px;}
+  .faq-item{border-bottom:1px solid #e4e0d8;}
+  .faq-q{
+    width:100%;text-align:left;background:none;border:none;cursor:pointer;
+    padding:24px 4px;display:flex;justify-content:space-between;align-items:center;gap:20px;
+    font-family:'Inter',sans-serif;font-size:16px;font-weight:600;color:var(--primary);
+  }
+  .faq-q .icon{
+    flex:none;width:22px;height:22px;border-radius:50%;
+    border:1px solid var(--accent);color:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:14px;
+    transition:transform .25s ease;
+  }
+  .faq-item.open .faq-q .icon{transform:rotate(45deg);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .faq-a p{padding:0 4px 24px;color:var(--ink-soft);font-size:15px;max-width:660px;}
+
+  /* ---------- CTA FINAL ---------- */
+  .cta-final{background:linear-gradient(135deg,var(--secondary),#124f38);color:var(--white);text-align:center;}
+  .cta-final h2{font-size:clamp(26px,3.4vw,38px);font-weight:800;max-width:640px;margin:0 auto;}
+  .cta-final p{margin:18px auto 34px;color:rgba(255,255,255,.85);max-width:520px;font-size:16px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:#081b29;color:rgba(255,255,255,.6);padding:56px 0 28px;}
+  .footer-grid{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.08);}
+  .footer-brand .logo{margin-bottom:14px;}
+  .footer-brand p{font-size:14px;max-width:280px;color:rgba(255,255,255,.5);}
+  .footer-links h4{font-family:'Montserrat',sans-serif;color:var(--white);font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px;}
+  .footer-links ul li{margin-bottom:10px;}
+  .footer-links a{font-size:14px;color:rgba(255,255,255,.6);transition:color .2s;}
+  .footer-links a:hover{color:var(--accent);}
+  .footer-bottom{padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:rgba(255,255,255,.4);}
+
+  @media(max-width:640px){
+    section{padding:72px 0;}
+    .hero{padding:140px 0 70px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <div class="container">
+    <a href="#top" class="logo">
+      <span class="mark">JS</span>
+      <span>JSE Energy Advisor<small>Consultoria em energia</small></span>
+    </a>
+    <nav class="nav-links">
+      <a href="#problema">O problema</a>
+      <a href="#dee">O que é o DEE</a>
+      <a href="#parceria">Investimento</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn-accent nav-cta" href="https://wa.me/5511999483633" target="_blank" rel="noopener">Quero meu Diagnóstico</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">Diagnóstico Energético Empresarial</span>
+      <h1>Descubra se sua empresa está pagando até <span>R$ 8.000/mês</span> a mais na conta de luz</h1>
+      <p class="lead">O DEE é uma análise isenta que identifica vazamentos financeiros, oportunidades de redução e um plano de ação claro — sem venda de equipamentos ou contratos de energia.</p>
+      <div class="hero-actions">
+        <a class="btn btn-accent" href="https://wa.me/5511999483633" target="_blank" rel="noopener">Quero meu Diagnóstico</a>
+        <a class="btn btn-outline" href="#dee">Como funciona</a>
+      </div>
+      <div class="exemption-seal">
+        <span class="check">✓</span>
+        Consultoria isenta — sem vínculo com fornecedores ou fabricantes
+      </div>
+    </div>
+    <div class="hero-photo">
+      <img src="images/foto-hero.jpg" alt="Jussiê Guimarães, consultor JSE Energy Advisor">
+    </div>
+  </div>
+</section>
+
+<!-- O PROBLEMA -->
+<section id="problema">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">O problema</span>
+      <h2>Sua empresa pode estar perdendo dinheiro sem saber</h2>
+      <p>Médias empresas que gastam acima de R$ 5.000/mês em energia frequentemente pagam multas e tarifas desnecessárias por falta de gestão técnica.</p>
+    </div>
+    <div class="problem-grid">
+      <ul class="pain-list">
+        <li>
+          <span class="pain-icon">!</span>
+          <span><strong style="color:var(--primary);">Demanda contratada superdimensionada</strong> — sua empresa paga por uma capacidade de energia que não usa.</span>
+        </li>
+        <li>
+          <span class="pain-icon">!</span>
+          <span><strong style="color:var(--primary);">Multas por baixo fator de potência</strong> — cobranças recorrentes que passam despercebidas na fatura.</span>
+        </li>
+        <li>
+          <span class="pain-icon">!</span>
+          <span><strong style="color:var(--primary);">Enquadramento tarifário incorreto</strong> — sua empresa pode estar no grupo ou modalidade tarifária errada.</span>
+        </li>
+      </ul>
+      <div class="highlight-box">
+        <div class="num">R$ 3.000 a R$ 8.000/mês</div>
+        <p>É o que nosso diagnóstico encontra, em média, de economia potencial por cliente. O DEE existe pra estancar esse vazamento financeiro — de forma isenta e com garantia de resultado.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- O QUE É O DEE -->
+<section class="section-alt" id="dee">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">O processo</span>
+      <h2>Diagnóstico Energético Empresarial (DEE)</h2>
+      <p>Um processo consultivo em 4 etapas, baseado em dados reais da sua operação — 100% online, sem necessidade de visitas ou instalação de equipamentos.</p>
+    </div>
+    <div class="steps4">
+      <div class="step">
+        <div class="step-num">Etapa 01</div>
+        <h3>Coleta</h3>
+        <p>Envio de 12 faturas, Cartão CNPJ e dados operacionais. Processo 100% online.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Etapa 02</div>
+        <h3>Análise técnica</h3>
+        <p>Cruzamento de dados com inteligência analítica para mapear o perfil de consumo e contratos.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Etapa 03</div>
+        <h3>Diagnóstico</h3>
+        <p>Identificação de cada vazamento financeiro, com cálculo exato de impacto.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">Etapa 04</div>
+        <h3>Plano de ação</h3>
+        <p>Entrega de relatório executivo com recomendações, ROI projetado e próximos passos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELO DE PARCERIA -->
+<section class="section-dark" id="parceria">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Investimento e garantia</span>
+      <h2>Modelo de parceria: só ganho se você economizar</h2>
+      <p>Transparência total sobre valores, condições e o que acontece se o diagnóstico não encontrar economia.</p>
+    </div>
+
+    <div class="price-cards">
+      <div class="price-card">
+        <span class="tag">Setup Fee</span>
+        <h3>Investimento no diagnóstico</h3>
+        <div class="price-value">R$ 6.000</div>
+        <p>Parcelado em 2x — 50% no início do processo e 50% na entrega do relatório executivo.</p>
+      </div>
+      <div class="price-card">
+        <span class="tag">Success Fee</span>
+        <h3>Só sobre a economia real</h3>
+        <div class="price-value">30% (teto R$ 12.000)</div>
+        <p>Cobrança apenas quando a economia identificada aparecer de fato na sua fatura.</p>
+      </div>
+    </div>
+
+    <div class="guarantee-strip">
+      <span class="icon">✓</span>
+      <div>
+        <h4>Garantia de resultado</h4>
+        <p>Se o DEE não identificar economia mínima de R$ 1.000/mês, devolvemos 100% do seu investimento de setup.</p>
+      </div>
+    </div>
+
+    <div class="exemption-strip">
+      <strong>Isenção consultiva:</strong> compromisso exclusivo com o diagnóstico. Não vendemos equipamentos nem contratos de energia — nossa recomendação é técnica e isenta.
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUEM É -->
+<section>
+  <div class="container">
+    <div class="section-head center">
+      <span class="eyebrow">Público-alvo</span>
+      <h2>Ideal para médias empresas que gastam acima de R$ 5.000/mês em energia</h2>
+    </div>
+    <div class="segments-grid">
+      <div class="segment">Indústrias</div>
+      <div class="segment">Centros Logísticos</div>
+      <div class="segment">Supermercados</div>
+      <div class="segment">Hotéis</div>
+      <div class="segment">Postos de Combustíveis</div>
+      <div class="segment">Construtoras</div>
+    </div>
+  </div>
+</section>
+
+<!-- AUTORIDADE -->
+<section class="authority" id="autoridade">
+  <div class="container authority-grid">
+    <div class="authority-photo">
+      <img src="images/foto-jussie.jpg" alt="Jussiê Guimarães">
+    </div>
+    <div>
+      <div class="role">Energy Advisor</div>
+      <h2>Jussiê Guimarães</h2>
+      <p class="bio">Engenheiro com mais de 20 anos de experiência em desenvolvimento de negócios e projetos técnico-comerciais. Minha atuação combina visão estratégica com conhecimento técnico profundo. Já liderei centenas de projetos para médias empresas — de indústrias a centros logísticos, redes de varejo e hotelaria.</p>
+      <p class="bio extra">Energy Advisor isento — meu compromisso é com a precisão do diagnóstico e a rentabilidade do seu negócio, sem conflitos de interesse com fornecedores.</p>
+      <div class="stats">
+        <div><div class="stat-number">20+</div><div class="stat-label">Anos de experiência</div></div>
+        <div><div class="stat-number">100+</div><div class="stat-label">Projetos liderados</div></div>
+        <div><div class="stat-number">PMEs</div><div class="stat-label">Foco de atuação</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section-alt" id="faq">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">FAQ</span>
+      <h2>Perguntas frequentes</h2>
+      <p>As principais dúvidas sobre custo, garantia e segurança do investimento no DEE.</p>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Quanto custa o DEE?
+          <span class="icon">+</span>
+        </button>
+        <div class="faq-a" style="max-height:200px;">
+          <p>O investimento é de R$ 6.000, em 2 parcelas. O success fee de 30% só ocorre sobre a economia real identificada e possui teto de R$ 12.000 de proteção ao cliente.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          E se não encontrar economia?
+          <span class="icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Se o diagnóstico não identificar ao menos R$ 1.000/mês de economia, devolvemos o valor do setup integralmente.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Preciso instalar equipamentos?
+          <span class="icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Não. O DEE é uma análise de dados e engenharia financeira baseada no seu histórico e perfil atual de consumo.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Quanto tempo leva?
+          <span class="icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Entrega em até 15 dias úteis após o recebimento da documentação completa.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Vocês vendem energia?
+          <span class="icon">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Não. Somos consultores independentes. Nossa recomendação é técnica e isenta, sem vínculo com fornecedores ou fabricantes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="container">
+    <h2>Pronto para descobrir quanto sua empresa pode economizar?</h2>
+    <p>Fale agora e agende seu Diagnóstico Energético Empresarial — risco zero, com garantia de resultado.</p>
+    <a class="btn btn-accent" href="https://wa.me/5511999483633" target="_blank" rel="noopener">Quero meu Diagnóstico</a>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <span class="mark">JS</span>
+          <span style="color:#fff;">JSE Energy Advisor</span>
+        </a>
+        <p>Diagnóstico Energético Empresarial para médias empresas.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#problema">O problema</a></li>
+          <li><a href="#dee">O que é o DEE</a></li>
+          <li><a href="#parceria">Investimento</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="https://wa.me/5511999483633" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:executivo.jussie@gmail.com">executivo.jussie@gmail.com</a></li>
+          <li><a href="https://linkedin.com/in/jussieguimaraes" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 JSE Energy Advisor. Todos os direitos reservados.</span>
+      <span>Diagnóstico Energético Empresarial</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(btn){
+  const item = btn.parentElement;
+  const answer = item.querySelector('.faq-a');
+  const isOpen = item.classList.contains('open');
+
+  document.querySelectorAll('.faq-item.open').forEach(el=>{
+    el.classList.remove('open');
+    el.querySelector('.faq-a').style.maxHeight = 0;
+  });
+
+  if(!isOpen){
+    item.classList.add('open');
+    answer.style.maxHeight = answer.scrollHeight + 'px';
+  }
+}
+</script>
+
+</body>
+</html>
