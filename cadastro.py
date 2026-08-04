@@ -9,7 +9,9 @@ menor_salario = 99999999
 while True:
     nome = str(input('Digite o seu nome: '))
     idade = int((input('Digite a sua idade: ')))
-    sexo = str(input('Digite o seu sexo [M/F]: ')).strip().upper()
+    sexo = ' '
+    while sexo not in 'MF':
+        sexo = str(input('Digite o seu sexo [M/F]: ')).strip().upper()[0]
     if sexo == 'M':
         homens += 1
     elif sexo == 'F':
