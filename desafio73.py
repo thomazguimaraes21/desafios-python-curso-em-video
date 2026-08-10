@@ -1,0 +1,7 @@
+print('CAMPEONATO BRASILEIRO')
+a = ('Palmeiras','Flamengo','Athletico-PR','Fluminense','Cruzeiro','Bahia','Corinthians','Bragantino','Botafogo','Coritiba','Atlético Mineiro','São Paulo','Vitoria','Gremio','Mirassol','Internacional','Santos','Vasco','Remo','Chapecoense')
+b = print(a[0:5])
+c = print(a[16:20])
+d = print(sorted(a))
+e = print(a.index('Chapecoense'))
+print('Corinthians maior do Brasil!!!!!!!!!!')
